@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Full-Stack Portfolio</title>
+    <style>
+        :root {
+            --palette-sage-base: #ebf0ec;
+            --palette-sage-dark: #28362e;
+            --palette-pink-glow: #f6e3e3;
+            --palette-pink-bold: #e5b3b1;
+            --text-main: #19241e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--palette-sage-base);
+            color: var(--text-main);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* High-End Motion Graphic Smooth Glass Blur Orbs */
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--palette-pink-glow);
+            filter: blur(100px);
+            z-index: 0;
+            pointer-events: none;
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .orb-alpha { width: 450px; height: 450px; top: -5%; left: -10%; }
+        .orb-beta { width: 400px; height: 400px; bottom: -5%; right: -10%; background: #e5ecd6; }
+
+        .application-frame {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 800px;
+            padding: 40px 24px;
+            box-sizing: border-box;
+            animation: renderSlide 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes renderSlide {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header { margin-bottom: 50px; }
+        h1 { font-family: Georgia, serif; font-size: 42px; font-weight: 400; color: var(--palette-sage-dark); margin: 0 0 14px 0; letter-spacing: -0.03em; }
+        .professional-summary { font-size: 16px; line-height: 1.6; color: #4a5c51; max-width: 540px; margin: 0; }
+        .category-delimiter { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--palette-sage-dark); margin-bottom: 24px; border-bottom: 1px solid rgba(40, 54, 46, 0.1); padding-bottom: 10px; }
+        .streamlined-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+
+        .showcase-card {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 16px;
+            padding: 28px;
+            box-sizing: border-box;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .showcase-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.85);
+            border-color: var(--palette-pink-bold);
+            box-shadow: 0 30px 40px rgba(40, 54, 46, 0.04);
+        }
+
+        .card-header-meta { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .card-header-meta h3 { margin: 0; font-size: 19px; font-weight: 600; }
+        .badge-pill { font-size: 11px; font-weight: 600; background-color: #ffffff; border: 1px solid rgba(40, 54, 46, 0.15); padding: 4px 10px; border-radius: 20px; }
+        .showcase-card:hover .badge-pill { background-color: var(--palette-pink-glow); border-color: var(--palette-pink-bold); }
+        .performance-metric { font-size: 13.5px; font-weight: 600; color: #945856; margin-bottom: 10px; }
+        .scope-details { margin: 0; font-size: 14.5px; line-height: 1.6; color: #4a5c51; }
+    </style>
+</head>
+<body>
+
+<div class="ambient-orb orb-alpha" id="interactiveOrb"></div>
+<div class="ambient-orb orb-beta"></div>
+
+<div class="application-frame">
+    <header>
+        <h1>Full-Stack Systems Engineer</h1>
+        <p class="professional-summary">Specializing in secure cloud-native architectures, optimized database clusters, and clean architectural interface aesthetics.</p>
+    </header>
+
+    <main>
+        <div class="category-delimiter">Cloud Database Connected Records</div>
+        <div class="streamlined-grid" id="asyncInsertionGrid">
+            <div class="showcase-card" style="text-align: center;"><p class="scope-details">Syncing live data structures from MongoDB pipeline...</p></div>
+        </div>
+    </main>
+</div>
+
+<script>
+    // --- Motion Graphic Event Listener: Tracks mouse coordinate matrices fluidly ---
+    const backgroundOrb = document.getElementById('interactiveOrb');
+    window.addEventListener('mousemove', (event) => {
+        const structuralX = (event.clientX - window.innerWidth / 2) * 0.12;
+        const structuralY = (event.clientY - window.innerHeight / 2) * 0.12;
+        backgroundOrb.style.transform = `translate(${structuralX}px, ${structuralY}px)`;
+    });
+
+    // --- Dynamic API Fetching: Query MongoDB cluster automatically via backend serverless engine ---
+    const assetGrid = document.getElementById('asyncInsertionGrid');
+    fetch('/api/assets')
+        .then(response => response.json())
+        .then(result => {
+            if(result.success) {
+                assetGrid.innerHTML = '';
+                result.data.forEach(item => {
+                    assetGrid.innerHTML += `
+                        <div class="showcase-card">
+                            <div class="card-header-meta">
+                                <h3>${item.name}</h3>
+                                <div class="badge-pill">${item.stack}</div>
+                            </div>
+                            <div class="performance-metric">📈 Metric: ${item.metrics}</div>
+                            <p class="scope-details">${item.scope}</p>
+                        </div>
+                    `;
+                });
+            }
+        })
+        .catch(() => {
+            assetGrid.innerHTML = `<div class="showcase-card" style="text-align:center;"><p class="scope-details">Data connection fault. Ensure system is initialized via Vercel platform tools.</p></div>`;
+        });
+</script>
+</body>
+</html>
