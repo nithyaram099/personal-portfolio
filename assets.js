@@ -1,22 +1,22 @@
 const { MongoClient } = require('mongodb');
 
-// This line checks for your secret Atlas link inside Vercel, or falls back to your string
-const MONGODB_URI = process.env.MONGODB_URI || "REPLACE_THIS_WITH_YOUR_ACTUAL_MONGODB_ATLAS_CONNECTION_STRING";
+// Your real, verified MongoDB Atlas connection string mapping directly into the database engine
+const MONGODB_URI = "mongodb+srv://Vercel-Admin-atlas-fulvous-magnet:7LURrPiUh9qHKEOL@atlas-fulvous-magnet.4dwucd2.mongodb.net/portfolio_db?retryWrites=true&w=majority";
 
 let cachedDb = null;
 
 async function connectToDatabase() {
     if (cachedDb) return cachedDb;
     
-    // Establish connection parameters to your live remote database warehouse cluster
+    // Connect securely to your live remote database instance cluster
     const client = await MongoClient.connect(MONGODB_URI);
-    const db = client.db(); // Automatically targets the default cluster database node
+    const db = client.db('portfolio_db'); // Sets up an exact database target node named portfolio_db
     cachedDb = db;
     return db;
 }
 
 module.exports = async (req, res) => {
-    // Cross-Origin Resource Sharing (CORS) security header handshakes
+    // Cross-Origin Resource Sharing (CORS) security header configurations
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
@@ -29,12 +29,11 @@ module.exports = async (req, res) => {
 
     try {
         const db = await connectToDatabase();
-        // Accesses your 'projects' data table collection node inside the Atlas cluster
         const collection = db.collection('projects');
         
         let projects = await collection.find({}).toArray();
 
-        // Self-seeding fallback script engine loop if your cloud collection is empty
+        // Self-seeding automated execution loop if your collection cluster is completely fresh
         if (projects.length === 0) {
             const seedRecords = [
                 { 
