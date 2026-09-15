@@ -1,7 +1,0 @@
-{
-  "routes": [
-    { "src": "/api/assets", "dest": "/api/assets.js" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/public/index.html" }
-  ]
-}
